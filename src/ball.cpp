@@ -24,7 +24,7 @@ void Ball::resetState() {
 }
 
 void Ball::autoMove() {
-    rect.translate(xdir, ydir);
+    rect.translate(speed * xdir, speed * ydir);
     if (rect.left() == 0 || rect.right() == 300) {
         xdir = -xdir;
     }

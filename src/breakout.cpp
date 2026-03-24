@@ -154,37 +154,45 @@ void Breakout::checkCollision() {
         victory();
     }
 
+    //Check if ball intersectss paddle
     if (ball->getRect().intersects(paddle->getRect())) {
         int paddleLeft = paddle->getRect().left();
         int ballLeft = ball->getRect().left();
         int first = paddleLeft + 8, second = paddleLeft + 16, third = paddleLeft + 24, fourth = paddleLeft + 32;
 
         if (ballLeft < first) {
-            ball->setXDir(-1); ball->setYDir(-1);
+            ball->setXDir(-1);
+            ball->setYDir(UP_DIR);
         } else if (ballLeft < second) {
-            ball->setXDir(-1); ball->setYDir(-1 * ball->getYDir());
+            ball->setXDir(-1);
+            ball->setYDir(UP_DIR * ball->getYDir());
         } else if (ballLeft < third) {
-            ball->setXDir(0); ball->setYDir(-1);
+            ball->setXDir(0);
+            ball->setYDir(UP_DIR);
         } else if (ballLeft < fourth) {
-            ball->setXDir(1); ball->setYDir(-1 * ball->getYDir());
+            ball->setXDir(1);
+            ball->setYDir(UP_DIR * ball->getYDir());
         } else {
-            ball->setXDir(1); ball->setYDir(-1);
+            ball->setXDir(1);
+            ball->setYDir(UP_DIR);
         }
     }
 
+    //Check if ball has collided with any of the blocks
     for (int i = 0; i < 30; ++i) {
         if (ball->getRect().intersects(bricks[i]->getRect()) && !bricks[i]->isDestroyed()) {
             int ballLeft = ball->getRect().left();
             int ballTop = ball->getRect().top();
-            QPoint right(ballLeft + 1, ballTop);
+            QPoint right(ballLeft + ball->getRect().width(), ballTop);
             QPoint left(ballLeft - 1, ballTop);
             QPoint top(ballLeft, ballTop - 1);
-            QPoint bottom(ballLeft, ballTop + 1);
+            QPoint bottom(ballLeft, ballTop + ball->getRect().height());
 
             if (bricks[i]->getRect().contains(right)) ball->setXDir(-1);
             else if (bricks[i]->getRect().contains(left)) ball->setXDir(1);
-            if (bricks[i]->getRect().contains(top)) ball->setYDir(1);
-            else if (bricks[i]->getRect().contains(bottom)) ball->setYDir(-1);
+
+            if (bricks[i]->getRect().contains(top)) ball->setYDir(DOWN_DIR);
+            else if (bricks[i]->getRect().contains(bottom)) ball->setYDir(UP_DIR);
 
             bricks[i]->setDestroyed(true);
         }

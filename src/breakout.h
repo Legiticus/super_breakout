@@ -5,6 +5,9 @@
 #include "paddle.h"
 #include "brick.h"
 
+#define UP_DIR -1
+#define DOWN_DIR 1
+
 class Breakout : public QWidget {
     Q_OBJECT
 
