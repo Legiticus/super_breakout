@@ -24,7 +24,7 @@ void Paddle::resetState() {
 void Paddle::setDx(int x) { dx = x; }
 void Paddle::move() {
     int x = rect.x() + dx;
-    if (x > 0 && x < 260) {
+    if (x > 0 && x < 300 - rect.width()) {
         rect.moveTo(x, 360);
     }
 }

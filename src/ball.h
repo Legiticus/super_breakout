@@ -14,16 +14,22 @@ public:
     void setYDir(int y);
     int getXDir() const;
     int getYDir() const;
+
+    void setPos(qreal x, qreal y);
+
+    void setSpeed(qreal speed);
+    qreal getSpeed() const;
+
     QRect getRect() const;
     QImage& getImage();
 
 private:
-    int xdir, ydir;
+    qreal x, y, xdir, ydir;
     QImage image;
     QRect rect;
-    qreal speed = 0;
+    qreal speed = 1;
     static const int INITIAL_X = 230;
-    static const int INITIAL_Y = 355;
+    static const int INITIAL_Y = 350;
     static const int RIGHT_EDGE = 300;
 
 };

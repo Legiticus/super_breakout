@@ -4,6 +4,8 @@
 Ball::Ball() {
     xdir = 1;
     ydir = -1;
+    x = 0;
+    y = 0;
     image.load(":/images/ball.png");
 
     if (image.isNull()) {
@@ -20,15 +22,18 @@ Ball::~Ball() {
 }
 
 void Ball::resetState() {
-    rect.moveTo(230, 355);
+    speed = 1;
 }
 
 void Ball::autoMove() {
-    rect.translate(speed * xdir, speed * ydir);
-    if (rect.left() == 0 || rect.right() == 300) {
+    x += xdir * speed;
+    y += ydir * speed;
+    rect.moveTo(x, y);
+
+    if (rect.left() <= 0 || rect.right() >= 300) {
         xdir = -xdir;
     }
-    if (rect.top() == 0) {
+    if (rect.top() <= 0) {
         ydir = -ydir;
     }
 }
@@ -37,5 +42,15 @@ void Ball::setXDir(int x) { xdir = x; }
 void Ball::setYDir(int y) { ydir = y; }
 int Ball::getXDir() const { return xdir; }
 int Ball::getYDir() const { return ydir; }
+
+void Ball::setPos(qreal x, qreal y) {
+    this->x = x;
+    this->y = y;
+    rect.moveTo(x, y);
+}
+
+void Ball::setSpeed(qreal speed) {this->speed = speed; std::cout << "Speed: " << speed << std::endl;}
+qreal Ball::getSpeed() const {return speed;}
+
 QRect Ball::getRect() const { return rect; }
 QImage &Ball::getImage() { return image; }

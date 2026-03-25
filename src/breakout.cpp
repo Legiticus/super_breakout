@@ -72,10 +72,10 @@ void Breakout::moveObjects() {
 void Breakout::keyPressEvent(QKeyEvent *event) {
     switch (event->key()) {
     case Qt::Key_Left:
-        paddle->setDx(-1);
+        paddle->setDx(-2);
         break;
     case Qt::Key_Right:
-        paddle->setDx(1);
+        paddle->setDx(2);
         break;
     case Qt::Key_P:
         pauseGame();
@@ -105,6 +105,7 @@ void Breakout::keyReleaseEvent(QKeyEvent *event) {
 void Breakout::startGame() {
     if (!gameStarted) {
         ball->resetState();
+        ball->setPos(230, 350);
         paddle->resetState();
         for (int i = 0; i < 30; ++i) {
             bricks[i]->setDestroyed(false);
@@ -156,6 +157,7 @@ void Breakout::checkCollision() {
 
     //Check if ball intersectss paddle
     if (ball->getRect().intersects(paddle->getRect())) {
+        ball->setSpeed(ball->getSpeed() + 0.1);
         int paddleLeft = paddle->getRect().left();
         int ballLeft = ball->getRect().left();
         int first = paddleLeft + 8, second = paddleLeft + 16, third = paddleLeft + 24, fourth = paddleLeft + 32;
